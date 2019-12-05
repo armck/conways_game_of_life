@@ -1,0 +1,300 @@
+import numpy 
+
+def find_cells_and_neighbours_func(old, row, coloumn, new):                         # identify living cells and create lists of their neghbours
+    for r in range(row):                                        # loop through each individual row
+        for c in range(coloumn):                                # loop through each cloumn 
+            if old[r,c] == 1:                                   
+            
+                live_cell_neighbours = [[r,c]]                  # creat list for neighbours and include [r,c] to identify the index for testing/validation of process
+            
+                try:                                           
+                    n1 = old[r-1, c-1]                          # top left
+                    if r-1 < 0:                                 # if row index is negative do not append 
+                        pass
+                    elif c-1 < 0:                               # if column index is negative do not append 
+                        pass
+                    else:
+                        if n1 == 1:                             # if neighbouring cell is live append to list 
+                            live_cell_neighbours.append([r-1, c-1])
+                        else:
+                            pass
+                except IndexError:                              # handle IndexError if index is outside range
+                    pass
+              
+                try:                
+                    n2 = old[r-1, c]                            # top mid
+                    if r-1 < 0:                                 # if row index is negative do not append 
+                        pass
+                    elif c < 0:                                 # if column index is negative do not append 
+                        pass
+                    else:
+                        if n2 == 1:                             # if neighbouring cell is live append to list 
+                            live_cell_neighbours.append([r-1, c])
+                        else:
+                            pass
+                except IndexError:                              # handle IndexError if index is outside range
+                    pass
+            
+                try:              
+                    n3 = old[r-1, c+1]                          # top right
+                    if r-1 < 0:                                 # if row index is negative do not append 
+                        pass
+                    elif c+1 < 0:                               # if column index is negative do not append 
+                        pass
+                    else:
+                        if n3 == 1:                             # if neighbouring cell is live append to list 
+                            live_cell_neighbours.append([r-1, c+1])
+                        else:
+                            pass
+                except IndexError:                              # handle IndexError if index is outside range
+                    pass   
+
+                try:                
+                    n4 = old[r, c-1]                            # middle left
+                    if r < 0:                                   # if row index is negative do not append 
+                        pass
+                    elif c-1 < 0:                               # if column index is negative do not append 
+                        pass
+                    else:
+                        if n4 == 1:                             # if neighbouring cell is live append to list 
+                            live_cell_neighbours.append([r, c-1])
+                        else:
+                            pass
+                except IndexError:                              # handle IndexError if index is outside range
+                    pass
+                  
+                try:
+                    n5 = old[r, c+1]                            # middle right
+                    if r < 0:                                   # if row index is negative do not append 
+                        pass
+                    elif c+1 < 0:                               # if column index is negative do not append 
+                        pass
+                    else:
+                        if n5 == 1:                             # if neighbouring cell is live append to list 
+                            live_cell_neighbours.append([r, c+1])
+                        else:
+                            pass
+                except IndexError:                              # handle IndexError if index is outside range
+                    pass
+            
+                try:
+                    n6 = old[r+1, c-1]                          # bottom left
+                    if r+1 < 0:                                 # if row index is negative do not append 
+                        pass
+                    elif c-1 < 0:                               # if column index is negative do not append 
+                        pass
+                    else:
+                        if n6 == 1:                             # if neighbouring cell is live append to list 
+                            live_cell_neighbours.append([r+1, c-1])
+                        else:
+                            pass
+                except IndexError:                              # handle IndexError if index is outside range
+                    pass
+            
+                try:
+                    n7 = old[r+1, c]                            # bottom middle
+                    if r+1 < 0:                                 # if row index is negative do not append 
+                        pass
+                    elif c < 0:                                 # if column index is negative do not append 
+                        pass
+                    else:
+                        if n7 == 1:                             # if neighbouring cell is live append to list 
+                            live_cell_neighbours.append([r+1, c])
+                        else:
+                            pass
+                except IndexError:                              # handle IndexError if index is outside range
+                    pass
+                  
+                try:
+                    n8 = old[r+1, c+1]                          # bottom right
+                    if r+1 < 0:                                 # if row index is negative do not append 
+                        pass
+                    elif c+1 < 0:                               # if column index is negative do not append 
+                        pass
+                    else:
+                        if n8 == 1:                             # if neighbouring cell is live append to list 
+                            live_cell_neighbours.append([r+1, c+1])
+                        else:
+                            pass
+                except IndexError:                              # handle IndexError if index is outside range
+                    pass
+            
+                #print('live cell + live neighbours: ' + str(live_cell_neighbours)) # print list of index plus its living neighbours
+                
+                live_or_die = len(live_cell_neighbours) - 1
+                #print(' number of live neighbours: ' + str(live_or_die))
+                
+                live_cell_logic(old, new, r, c, live_or_die)
+                
+                
+            elif old[r,c] == 0:
+                dead_cells_neighbours_func(old, r, c, new)
+    return old, new;
+
+def dead_cells_neighbours_func(old, r, c, new):
+    
+    dead_cell_neighbours = [[r,c]]                  # creat list for neighbours and include [r,c] to identify the index for testing/validation of process
+            
+    try:                                           
+        n1 = old[r-1, c-1]                          # top left
+        if r-1 < 0:
+            pass
+        elif c-1 < 0:
+            pass
+        else:
+            if n1 == 1:
+                dead_cell_neighbours.append([r-1, c-1])
+            else:
+                pass
+    except IndexError:                              # handle IndexError if index is outside range
+        pass
+              
+    try:                
+        n2 = old[r-1, c]                            # top mid
+        if r-1 < 0:
+            pass
+        elif c < 0:
+            pass
+        else:
+            if n2 == 1:
+                dead_cell_neighbours.append([r-1, c])
+            else:
+                pass
+    except IndexError:                              # handle IndexError if index is outside range
+        pass
+      
+    try:              
+        n3 = old[r-1, c+1]                          # top right
+        if r-1 < 0:
+            pass
+        elif c+1 < 0:
+            pass
+        else:
+            if n3 == 1:
+                dead_cell_neighbours.append([r-1, c+1])
+            else:
+                pass
+    except IndexError:                              # handle IndexError if index is outside range
+        pass               
+            
+    try:                
+        n4 = old[r, c-1]                            # middle left
+        if r < 0:
+            pass
+        elif c-1 < 0:
+            pass
+        else:
+            if n4 == 1:
+                dead_cell_neighbours.append([r, c-1])
+            else:
+                pass
+    except IndexError:                              # handle IndexError if index is outside range
+        pass
+
+    try:
+        n5 = old[r, c+1]                            # middle right
+        if r < 0:
+            pass
+        elif c+1 < 0:
+            pass
+        else:
+            if n5 == 1:
+                dead_cell_neighbours.append([r, c+1])
+            else:
+                pass
+    except IndexError:                              # handle IndexError if index is outside range
+        pass
+            
+    try:
+        n6 = old[r+1, c-1]                          # bottom left
+        if r+1 < 0:
+            pass
+        elif c-1 < 0:
+            pass
+        else:
+            if n6 == 1:
+                dead_cell_neighbours.append([r+1, c-1])
+            else:
+                pass
+    except IndexError:                              # handle IndexError if index is outside range
+        pass
+            
+    try:
+        
+        n7 = old[r+1, c]                            # bottom middle
+        if r+1 < 0:
+            pass
+        elif c < 0:
+            pass
+        else:
+            if n7 == 1:
+                dead_cell_neighbours.append([r+1, c])
+            else:
+                pass
+    except IndexError:                              # handle IndexError if index is outside range
+        pass
+              
+    try:
+        n8 = old[r+1, c+1]                            # bottom middle
+        if r+1 < 0:
+            pass
+        elif c+1 < 0:
+            pass
+        else:
+            if n8 == 1:
+                dead_cell_neighbours.append([r+1, c+1])
+            else:
+                pass
+    except IndexError:                              # handle IndexError if index is outside range
+        pass
+            
+    #print('dead cell + live neighbours: ' + str(dead_cell_neighbours))
+    live_or_die = len(dead_cell_neighbours) - 1
+    #print(' number of live neighbours: ' + str(live_or_die))
+    dead_cell_logic(old, new, r, c, live_or_die)
+ 
+def live_cell_logic(old, new, r, c, live_or_die):
+    
+    if live_or_die == 3:
+        new[r,c] = 1
+    elif live_or_die == 2:
+        new[r,c] = 1
+    elif live_or_die < 2:
+        new[r, c] = 0
+    elif live_or_die < 3:
+        new[r,c] = 0
+    else:
+        pass
+    
+    #print(new)
+    return new
+
+def dead_cell_logic(old, new, r, c, live_or_die):
+    
+    if live_or_die == 3:
+        new[r,c] = 1
+    else:
+        new[r,c] = 0
+    
+    #print(new)
+    return(new)
+
+n = int(input('enter an integer legnth/width of the grid (e.g. 5, 10, etc.)'))
+old = numpy.random.randint((2), size=(n,n))                 # create an array to start off with
+row, coloumn = old.shape                                    # get the number of rows and cloumns in the array
+new = numpy.random.randint(1, size=(row, coloumn))          # create a new array of all zeros of the same dimensions
+iterations = 10                                             # define how many iterations of calculations to do
+
+def game_of_life(old, new, row, coloumn):
+    
+    old, new = find_cells_and_neighbours_func(old, row, coloumn, new)
+    print(new)
+    return old, new;
+
+def iterator(old, new, row, coloumn):
+    
+    iterations = int(input('enter the number of iterations the game should move through: '))
+    for i in range(0, iterations):
+        game_of_life(old, new, row, coloumn)
+    
+iterator(old, new, row, coloumn)
